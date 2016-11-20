@@ -61,7 +61,7 @@ function minify(options) {
       sourceMap = convertSourceMap.fromSource(bundleContent, true);
 
       if (sourceMap) {
-        sourceMap = JSON.parse(sourceMap.toJSON());
+        sourceMap = sourceMap.toObject();
         bundleContent = convertSourceMap.removeComments(bundleContent);
       }
     }
