@@ -30,6 +30,41 @@ bitbundler.bundle({
 });
 ```
 
+
+## with code splitting
+
+All options can actually be configured on a per bundle basis leveraging bundle names, which is really handy when spltting bundles.
+
+``` javascript
+var Bitbundler = require("bit-bundler");
+var jsPlugin = require("bit-loader-js");
+var splitter = require("bit-bundler-splitter");
+var minifyjs = require("bit-bundler-minifyjs");
+
+var bitbundler = new Bitbundler({
+  loader: {
+    plugins: [
+      jsPlugin()
+    ]
+  },
+  bundler: {
+    plugins: [
+      splitter("dist/vendor.js", { match: path: /node_modules/ })
+      minifyjs({
+        "dist/vendor.js": {
+          sourceMap: false
+        }
+      })
+    ]
+  }
+});
+
+bitbundler.bundle({
+  src: "in.js",
+  dest: "out.js"
+});
+```
+
 ## bundle banner
 
 A useful feature is adding a "banner" to the output minified file.
@@ -46,6 +81,7 @@ minifyjs({
 All options are directly forwarded onto [UglifyJS](https://github.com/mishoo/UglifyJS2), so understanding what options are available is helpful if the default behavior isn't sufficient for you. For convenience, you can refer to the options below that are commonly used.
 
 > The only [UglifyJS](https://github.com/mishoo/UglifyJS2) option that is preconfigured and cannot be changed is `fromString`, which is always set to `true` since `bit-bundler-minifyjs` feeds the source code directly into `UglifyJS`.
+
 
 ## `banner`
 
