@@ -1,0 +1,22 @@
+{
+  "name": "bit-bundler-minifyjs",
+  "version": "0.0.0",
+  "description": "bit-bundler plugin to minify JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiguelCastillo/bit-bundler-minifyjs.git"
+  },
+  "keywords": [
+    "bit-bundler-plugin"
+  ],
+  "author": "Miguel Castillo <manchagnu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MiguelCastillo/bit-bundler-minifyjs/issues"
+  },
+  "homepage": "https://github.com/MiguelCastillo/bit-bundler-minifyjs#readme"
+}
