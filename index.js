@@ -1,44 +1,65 @@
 var utils = require("belty");
 var mkdirp = require("mkdirp");
 var path = require("path");
+var convertSourceMap = require("convert-source-map");
 var fs = require("fs");
 var UglifyJS = require("uglify-js");
 
-module.exports = function minify(options) {
+function minify(options) {
   options = options || {};
 
   function minifier(bundle, filename) {
-    if (bundle) {
-      var settings = options[bundle.name] || options;
-      var directory = path.dirname(filename);
-      var extension = path.extname(filename);
-      var basename = path.basename(filename);
-      var minFilename = path.basename(basename, extension) + /*".min" +*/ extension;
-      var sourceMapUrl = minFilename + ".map";
-      var input = {}; input[basename] = bundle.result.toString();
-
-      if (settings.sourceMap !== false) {
-        settings = utils.extend({
-          sourceMapInline: true,
-          sourceMapUrl: sourceMapUrl,
-          outSourceMap: minFilename
-        }, settings);
-      }
-
-      var result = UglifyJS.minify(input,
-        utils.merge({}, settings, {
-          fromString: true
-        })
-      );
-
-      if (result.map) {
-        bundle.setSourcemap(result.map);
-      }
-
-      bundle.setContent(result.code);
+    if (!bundle) {
+      return bundle;
     }
 
-    return bundle;
+    var settings = options[bundle.name] || options;
+    var basename = path.basename(filename);
+    var minFilename = basename;
+    var sourceMapUrl = minFilename + ".map";
+    var input = {}; input[basename] = bundle.result.toString();
+
+    if (settings.sourceMap !== false) {
+      var data = getSourcemap(bundle);
+      sourceMap = data.map;
+      input[basename] = data.code;
+
+      settings = utils.extend({
+        sourceMapInline: true,
+        sourceMapUrl: sourceMapUrl,
+        inSourceMap: sourceMap,
+        outSourceMap: minFilename
+      }, settings);
+    }
+
+    var result = UglifyJS.minify(input,
+      utils.merge({}, settings, {
+        fromString: true
+      })
+    );
+
+    return bundle
+      .setSourcemap(result.map)
+      .setContent(result.code);
+  }
+
+  function getSourcemap(bundle) {
+    var sourceMap = bundle.sourcemap;
+    var bundleContent = bundle.content.toString();
+
+    if (!sourceMap) {
+      sourceMap = convertSourceMap.fromSource(bundleContent, true);
+
+      if (sourceMap) {
+        sourceMap = JSON.parse(sourceMap.toJSON());
+        bundleContent = convertSourceMap.removeComments(bundleContent);
+      }
+    }
+
+    return {
+      map: sourceMap,
+      code: bundleContent
+    };
   }
 
   function postbundle(bundler, context) {
@@ -49,3 +70,5 @@ module.exports = function minify(options) {
     postbundle: postbundle
   };
 };
+
+module.exports = minify;
