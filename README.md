@@ -5,6 +5,12 @@
 
 # usage
 
+## install
+
+```
+$ npm install --save-dev bit-bundler-minifyjs
+```
+
 ## bit-bundler setup
 ``` javascript
 var Bitbundler = require("bit-bundler");
