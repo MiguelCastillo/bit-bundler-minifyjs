@@ -47,17 +47,16 @@ All options are directly forwarded onto [UglifyJS](https://github.com/mishoo/Ugl
 
 > The only [UglifyJS](https://github.com/mishoo/UglifyJS2) option that is preconfigured and cannot be changed is `fromString`, which is always set to `true` since `bit-bundler-minifyjs` feeds the source code directly into `UglifyJS`.
 
+## `banner`
 
-## `sourceMap`
-
-Flag to disable sourcemap generation. `true` by default.
+String value that is added to the top of the generated file. Useful for adding build and licensing information.  This option is a shorthand for `output.preamble` option in `UglifyJS`.
 
 > This is a bit-bundler-minifyjs option, not an `UglifyJS` option.
 
 
-## `banner`
+## `sourceMap`
 
-String value that is added to the top of the generated file. Useful for adding build and licensing information.  This option is a shorthand for `output.preamble` option in `UglifyJS`.
+Flag to disable sourcemap generation. `true` by default.
 
 > This is a bit-bundler-minifyjs option, not an `UglifyJS` option.
 
