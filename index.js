@@ -14,6 +14,8 @@ function minify(options) {
     }
 
     var settings = options[bundle.name] || options;
+    settings = settings.options || settings;
+
     var basename = path.basename(filename);
     var minFilename = basename;
     var sourceMapUrl = minFilename + ".map";
