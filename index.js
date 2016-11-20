@@ -48,29 +48,19 @@ function minify(options) {
       })
     );
 
-    if (settings.sourceMapInline) {
-      return bundle
-        .setSourcemap(null)
-        .setContent(result.code);
-    }
-    else {
-      return bundle
-        .setSourcemap(result.map)
-        .setContent(result.code);
-    }
+    return bundle
+      .setSourcemap(result.map)
+      .setContent(result.code);
   }
 
   function splitSourcemap(bundle) {
     var sourceMap = bundle.sourcemap;
     var bundleContent = bundle.content.toString();
+    var converter = convertSourceMap.fromSource(bundleContent, true);
 
-    if (!sourceMap) {
-      var converter = convertSourceMap.fromSource(bundleContent, true);
-
-      if (converter) {
-        sourceMap = converter.toJSON();
-        bundleContent = convertSourceMap.removeComments(bundleContent);
-      }
+    if (converter) {
+      sourceMap = converter.toJSON();
+      bundleContent = convertSourceMap.removeComments(bundleContent);
     }
 
     return {
