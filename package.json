@@ -1,6 +1,6 @@
 {
   "name": "bit-bundler-minifyjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "bit-bundler plugin to minify JavaScript",
   "main": "index.js",
   "scripts": {
