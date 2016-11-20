@@ -32,6 +32,14 @@ function minify(options) {
       }, settings);
     }
 
+    if (settings.banner) {
+      settings = utils.extend({
+        output: {
+          preamble: settings.banner
+        }
+      }, settings);
+    }
+
     var result = UglifyJS.minify(input,
       utils.merge({}, settings, {
         fromString: true
