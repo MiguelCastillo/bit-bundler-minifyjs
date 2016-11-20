@@ -22,8 +22,8 @@ function minify(options) {
     var input = {}; input[basename] = bundle.result.toString();
 
     if (settings.sourceMap !== false) {
-      var data = getSourcemap(bundle);
-      sourceMap = data.map;
+      var data = splitSourcemap(bundle);
+      sourceMap = data.map ? JSON.parse(data.map) : null;
       input[basename] = data.code;
 
       settings = utils.extend({
@@ -48,20 +48,27 @@ function minify(options) {
       })
     );
 
-    return bundle
-      .setSourcemap(result.map)
-      .setContent(result.code);
+    if (settings.sourceMapInline) {
+      return bundle
+        .setSourcemap(null)
+        .setContent(result.code);
+    }
+    else {
+      return bundle
+        .setSourcemap(result.map)
+        .setContent(result.code);
+    }
   }
 
-  function getSourcemap(bundle) {
+  function splitSourcemap(bundle) {
     var sourceMap = bundle.sourcemap;
     var bundleContent = bundle.content.toString();
 
     if (!sourceMap) {
-      sourceMap = convertSourceMap.fromSource(bundleContent, true);
+      var converter = convertSourceMap.fromSource(bundleContent, true);
 
-      if (sourceMap) {
-        sourceMap = sourceMap.toObject();
+      if (converter) {
+        sourceMap = converter.toJSON();
         bundleContent = convertSourceMap.removeComments(bundleContent);
       }
     }
