@@ -16,10 +16,10 @@ function minify(options) {
     var settings = options[bundle.name] || options;
     settings = settings.options || settings;
 
-    var basename = path.basename(filename);
+    var basename = path.basename(bundle.dest);
     var minFilename = basename;
     var sourceMapUrl = minFilename + ".map";
-    var input = {}; input[basename] = bundle.result.toString();
+    var input = {}; input[basename] = bundle.content.toString();
 
     if (settings.sourceMap !== false) {
       var data = splitSourcemap(bundle);
