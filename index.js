@@ -1,14 +1,12 @@
 var utils = require("belty");
-var mkdirp = require("mkdirp");
 var path = require("path");
 var convertSourceMap = require("convert-source-map");
-var fs = require("fs");
 var UglifyJS = require("uglify-js");
 
 function minify(options) {
   options = options || {};
 
-  function minifier(bundle, filename) {
+  function minifier(bundle) {
     if (!bundle) {
       return bundle;
     }
@@ -26,27 +24,24 @@ function minify(options) {
       sourceMap = data.map ? JSON.parse(data.map) : null;
       input[basename] = data.code;
 
-      settings = utils.extend({
-        sourceMapInline: true,
-        sourceMapUrl: sourceMapUrl,
-        inSourceMap: sourceMap,
-        outSourceMap: minFilename
-      }, settings);
+      settings = utils.assign({}, settings, {
+        sourceMap: {
+          content: sourceMap,
+          filename: minFilename,
+          url: sourceMapUrl
+        }
+      });
     }
 
     if (settings.banner) {
-      settings = utils.extend({
+      settings = utils.assign({
         output: {
           preamble: settings.banner
         }
       }, settings);
     }
 
-    var result = UglifyJS.minify(input,
-      utils.merge({}, settings, {
-        fromString: true
-      })
-    );
+    var result = UglifyJS.minify(input, settings);
 
     return bundle
       .setSourcemap(result.map)
