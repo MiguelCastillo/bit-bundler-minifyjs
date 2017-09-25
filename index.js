@@ -1,6 +1,5 @@
 var utils = require("belty");
 var path = require("path");
-var convertSourceMap = require("convert-source-map");
 var UglifyJS = require("uglify-js");
 
 function minify(options) {
@@ -14,21 +13,18 @@ function minify(options) {
     var settings = options[bundle.name] || options;
     settings = settings.options || settings;
 
-    var basename = path.basename(bundle.dest);
-    var minFilename = basename;
-    var sourceMapUrl = minFilename + ".map";
-    var input = {}; input[basename] = bundle.content.toString();
+    var minFilename = path.basename(bundle.dest);
+    var input = {};
+
+    input[minFilename] = bundle.content.toString();
 
     if (settings.sourceMap !== false) {
-      var data = splitSourcemap(bundle);
-      sourceMap = data.map ? JSON.parse(data.map) : null;
-      input[basename] = data.code;
+      input[minFilename] = bundle.content.toString();
 
       settings = utils.assign({}, settings, {
         sourceMap: {
-          content: sourceMap,
-          filename: minFilename,
-          url: sourceMapUrl
+          content: "inline",
+          url: "inline"
         }
       });
     }
@@ -42,26 +38,7 @@ function minify(options) {
     }
 
     var result = UglifyJS.minify(input, settings);
-
-    return bundle
-      .setSourcemap(result.map)
-      .setContent(result.code);
-  }
-
-  function splitSourcemap(bundle) {
-    var sourceMap = bundle.sourcemap;
-    var bundleContent = bundle.content.toString();
-    var converter = convertSourceMap.fromSource(bundleContent, true);
-
-    if (converter) {
-      sourceMap = converter.toJSON();
-      bundleContent = convertSourceMap.removeComments(bundleContent);
-    }
-
-    return {
-      map: sourceMap,
-      code: bundleContent
-    };
+    return bundle.setContent(result.code);
   }
 
   function postbundle(bundler, context) {

@@ -21,7 +21,6 @@
   "homepage": "https://github.com/MiguelCastillo/bit-bundler-minifyjs#readme",
   "dependencies": {
     "belty": "^5.1.0",
-    "convert-source-map": "^1.5.0",
     "mkdirp": "^0.5.1",
     "uglify-js": "^3.0.28"
   }
