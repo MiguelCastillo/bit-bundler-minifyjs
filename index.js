@@ -35,6 +35,11 @@ function minify(options) {
     }
 
     var result = UglifyJS.minify(input, settings);
+
+    if (result.error) {
+      throw new Error(result.error);
+    }
+
     return bundle.setContent(result.code);
   }
 
