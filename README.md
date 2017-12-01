@@ -1,4 +1,7 @@
 # bit-bundler-minifyjs
+
+[![Build Status](https://travis-ci.org/MiguelCastillo/bit-bundler-minifyjs.svg?branch=master)](https://travis-ci.org/MiguelCastillo/bit-bundler-minifyjs)
+
 [bit-bundler](https://github.com/MiguelCastillo/bit-bundler) plugin for minifying JavaScript
 
 `bit-bundler-minifyjs` is actually a tiny wrapper for [UglifyJS](https://github.com/mishoo/UglifyJS2), so be sure to check it out for more details on all the available options.
