@@ -1,8 +1,6 @@
 # bit-bundler-minifyjs
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/MiguelCastillo/bit-bundler-minifyjs.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/MiguelCastillo/bit-bundler-minifyjs.svg?branch=master)](https://travis-ci.org/MiguelCastillo/bit-bundler-minifyjs)
+[![Build Status](https://travis-ci.org/MiguelCastillo/bit-bundler-minifyjs.svg?branch=master)](https://travis-ci.org/MiguelCastillo/bit-bundler-minifyjs) [![Greenkeeper badge](https://badges.greenkeeper.io/MiguelCastillo/bit-bundler-minifyjs.svg)](https://greenkeeper.io/)
 
 [bit-bundler](https://github.com/MiguelCastillo/bit-bundler) plugin for minifying JavaScript
 
