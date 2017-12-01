@@ -1,10 +1,9 @@
 {
   "name": "bit-bundler-minifyjs",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "bit-bundler plugin to minify JavaScript",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MiguelCastillo/bit-bundler-minifyjs.git"
