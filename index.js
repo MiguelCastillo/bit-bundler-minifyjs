@@ -12,15 +12,11 @@ function minify(options) {
   options = options || {};
 
   function minifier(bundle) {
-    if (!bundle) {
+    if (!bundle || !bundle.content) {
       return bundle;
     }
 
     var settings = Object.assign({}, options[bundle.name] || options);
-    var minFilename = path.basename(bundle.dest);
-    var input = {};
-
-    input[minFilename] = bundle.content.toString();
 
     if (settings.sourceMap !== false) {
       settings.sourceMap = Object.assign({}, defaults.sourceMap, settings.sourceMap);
@@ -34,7 +30,7 @@ function minify(options) {
       }, settings);
     }
 
-    var result = UglifyJS.minify(input, settings);
+    var result = UglifyJS.minify(bundle.content.toString(), settings);
 
     if (result.error) {
       throw new Error(result.error);
