@@ -1,5 +1,5 @@
 var path = require("path");
-var UglifyJS = require("uglify-js");
+var UglifyJS = require("uglify-es");
 
 var defaults = {
   sourceMap: {
