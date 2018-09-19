@@ -11,16 +11,16 @@
 ## install
 
 ```
-$ npm install --save-dev bit-bundler-minifyjs
+$ npm install --save-dev @bit/bundler-minifyjs
 ```
 
 ## bit-bundler setup
 ``` javascript
-var Bitbundler = require("bit-bundler");
+var Bitbundler = require("@bit/bundler");
 
 var bitbundler = new Bitbundler({
   bundler: [
-    "bit-bundler-minifyjs"
+    "@bit/bundler-minifyjs"
   ]
 });
 
@@ -36,19 +36,19 @@ bitbundler.bundle({
 All options can actually be configured on a per bundle basis leveraging bundle names, which is really handy when spltting bundles.
 
 ``` javascript
-var Bitbundler = require("bit-bundler");
+var Bitbundler = require("@bit/bundler");
 
 Bitbundler.bundle({
   src: "in.js",
   dest: "out.js"
 }, {
   bundler: [
-    ["bit-bundler-splitter", {
+    ["@bit/bundler-splitter", {
       name: "vendor",
       dest: "dist/vendor.js",
       match: { path: /node_modules/ }
     }],
-    ["bit-bundler-minifyjs", {
+    ["@bit/bundler-minifyjs", {
       vendor: {
         sourceMap: false
       }
