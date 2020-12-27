@@ -40,6 +40,10 @@ function minify(options) {
   }
 
   function postbundle(bundler, context) {
+    if (context.updateBundles) {
+      return context.updateBundles(minifier);
+    }
+
     return context.visitBundles(minifier);
   }
 
